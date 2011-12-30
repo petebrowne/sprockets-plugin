@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe Sprockets::Plugin do
+  after :each do
+    Sprockets::Plugin.class_variable_set :@@plugins, nil
+  end
+  
   describe ".append_path" do
     it "adds paths" do
       dir1 = @sandbox.directory "plugin/assets/images"
@@ -20,7 +24,7 @@ describe Sprockets::Plugin do
       dir3 = @sandbox.directory "plugin/assets/stylesheets"
       
       plugin = Class.new Sprockets::Plugin
-      plugin.root = @sandbox.join "plugin"
+      plugin.root @sandbox.join "plugin"
       plugin.append_path "assets/images"
       plugin.append_path "assets/javascripts"
       plugin.append_path "assets/stylesheets"
@@ -59,7 +63,7 @@ describe Sprockets::Plugin do
       dir3 = @sandbox.directory "plugin/assets/stylesheets"
       
       plugin = Class.new Sprockets::Plugin
-      plugin.root = @sandbox.join "plugin"
+      plugin.root @sandbox.join "plugin"
       plugin.prepend_path "assets/images"
       plugin.prepend_path "assets/javascripts"
       plugin.prepend_path "assets/stylesheets"
@@ -83,9 +87,18 @@ describe Sprockets::Plugin do
     it "converts the given path to a Pathname object" do
       plugin_path = @sandbox.join "plugin"
       plugin = Class.new Sprockets::Plugin
-      plugin.root = plugin_path.to_s
+      plugin.root plugin_path.to_s
       plugin.root.should be_an_instance_of(Pathname)
       plugin.root.should == plugin_path
+    end
+  end
+  
+  describe ".plugins" do
+    it "returns all of the plugins" do
+      plugin_1 = Class.new Sprockets::Plugin
+      plugin_2 = Class.new Sprockets::Plugin
+      plugin_3 = Class.new Sprockets::Plugin
+      Sprockets::Plugin.plugins.should == [ plugin_1, plugin_2, plugin_3 ]
     end
   end
 end
