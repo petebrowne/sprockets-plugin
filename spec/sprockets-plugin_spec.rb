@@ -5,6 +5,22 @@ describe Sprockets::Plugin do
     Sprockets::Plugin.class_variable_set :@@plugins, nil
   end
   
+  it "adds paths from plugins to newly created environments" do
+    dir_1 = @sandbox.directory "plugin_1/assets"
+    dir_2 = @sandbox.directory "plugin_2/assets"
+    dir_3 = @sandbox.directory "plugin_3/assets"
+    
+    plugin_1 = Class.new Sprockets::Plugin
+    plugin_1.append_path dir_1
+    plugin_2 = Class.new Sprockets::Plugin
+    plugin_2.append_path dir_2
+    plugin_3 = Class.new Sprockets::Plugin
+    plugin_3.append_path dir_3
+    
+    env = Sprockets::Environment.new
+    env.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
+  end
+  
   describe ".append_path" do
     it "adds paths" do
       dir_1 = @sandbox.directory "plugin/assets/images"
