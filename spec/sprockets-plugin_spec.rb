@@ -7,79 +7,104 @@ describe Sprockets::Plugin do
   
   describe ".append_path" do
     it "adds paths" do
-      dir1 = @sandbox.directory "plugin/assets/images"
-      dir2 = @sandbox.directory "plugin/assets/javascripts"
-      dir3 = @sandbox.directory "plugin/assets/stylesheets"
+      dir_1 = @sandbox.directory "plugin/assets/images"
+      dir_2 = @sandbox.directory "plugin/assets/javascripts"
+      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
       
       plugin = Class.new Sprockets::Plugin
-      plugin.append_path dir1
-      plugin.append_path dir2
-      plugin.append_path dir3
-      plugin.paths.should == [dir1, dir2, dir3].map(&:to_s)
+      plugin.append_path dir_1
+      plugin.append_path dir_2
+      plugin.append_path dir_3
+      plugin.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
     end
     
     it "adds the paths relative to the plugin root" do
-      dir1 = @sandbox.directory "plugin/assets/images"
-      dir2 = @sandbox.directory "plugin/assets/javascripts"
-      dir3 = @sandbox.directory "plugin/assets/stylesheets"
+      dir_1 = @sandbox.directory "plugin/assets/images"
+      dir_2 = @sandbox.directory "plugin/assets/javascripts"
+      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
       
       plugin = Class.new Sprockets::Plugin
       plugin.root @sandbox.join "plugin"
       plugin.append_path "assets/images"
       plugin.append_path "assets/javascripts"
       plugin.append_path "assets/stylesheets"
-      plugin.paths.should == [dir1, dir2, dir3].map(&:to_s)
+      plugin.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
     end
     
     it "only adds existing paths" do
-      dir1 = @sandbox.directory "plugin/assets/images"
-      dir2 = @sandbox.directory "plugin/assets/javascripts"
-      dir3 = @sandbox.join "plugin/assets/stylesheets"
+      dir_1 = @sandbox.directory "plugin/assets/images"
+      dir_2 = @sandbox.directory "plugin/assets/javascripts"
+      dir_3 = @sandbox.join "plugin/assets/stylesheets"
       
       plugin = Class.new Sprockets::Plugin
-      plugin.append_path dir1
-      plugin.append_path dir2
-      plugin.append_path dir3
-      plugin.paths.should == [dir1, dir2].map(&:to_s)
+      plugin.append_path dir_1
+      plugin.append_path dir_2
+      plugin.append_path dir_3
+      plugin.paths.should == [dir_1, dir_2].map(&:to_s)
+    end
+  end
+  
+  describe ".appends_paths" do
+    it "adds multiple paths at once" do
+      dir_1 = @sandbox.directory "plugin/assets/images"
+      dir_2 = @sandbox.directory "plugin/assets/javascripts"
+      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
+      
+      plugin = Class.new Sprockets::Plugin
+      plugin.append_path dir_1, dir_2 ,dir_3
+      plugin.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
     end
   end
   
   describe ".prepend_path" do
     it "adds paths" do
-      dir1 = @sandbox.directory "plugin/assets/images"
-      dir2 = @sandbox.directory "plugin/assets/javascripts"
-      dir3 = @sandbox.directory "plugin/assets/stylesheets"
+      dir_1 = @sandbox.directory "plugin/assets/images"
+      dir_2 = @sandbox.directory "plugin/assets/javascripts"
+      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
       
       plugin = Class.new Sprockets::Plugin
-      plugin.prepend_path dir1
-      plugin.prepend_path dir2
-      plugin.prepend_path dir3
-      plugin.paths.should == [dir3, dir2, dir1].map(&:to_s)
+      plugin.prepend_path dir_1
+      plugin.prepend_path dir_2
+      plugin.prepend_path dir_3
+      plugin.paths.should == [dir_3, dir_2, dir_1].map(&:to_s)
     end
     
     it "adds the paths relative to the plugin root" do
-      dir1 = @sandbox.directory "plugin/assets/images"
-      dir2 = @sandbox.directory "plugin/assets/javascripts"
-      dir3 = @sandbox.directory "plugin/assets/stylesheets"
+      dir_1 = @sandbox.directory "plugin/assets/images"
+      dir_2 = @sandbox.directory "plugin/assets/javascripts"
+      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
       
       plugin = Class.new Sprockets::Plugin
       plugin.root @sandbox.join "plugin"
       plugin.prepend_path "assets/images"
       plugin.prepend_path "assets/javascripts"
       plugin.prepend_path "assets/stylesheets"
-      plugin.paths.should == [dir3, dir2, dir1].map(&:to_s)
+      plugin.paths.should == [dir_3, dir_2, dir_1].map(&:to_s)
     end
     
     it "only adds existing paths" do
-      dir1 = @sandbox.directory "plugin/assets/images"
-      dir2 = @sandbox.directory "plugin/assets/javascripts"
-      dir3 = @sandbox.join "plugin/assets/stylesheets"
+      dir_1 = @sandbox.directory "plugin/assets/images"
+      dir_2 = @sandbox.directory "plugin/assets/javascripts"
+      dir_3 = @sandbox.join "plugin/assets/stylesheets"
       
       plugin = Class.new Sprockets::Plugin
-      plugin.prepend_path dir1
-      plugin.prepend_path dir2
-      plugin.prepend_path dir3
-      plugin.paths.should == [dir2, dir1].map(&:to_s)
+      plugin.prepend_path dir_1
+      plugin.prepend_path dir_2
+      plugin.prepend_path dir_3
+      plugin.paths.should == [dir_2, dir_1].map(&:to_s)
+    end
+  end
+  
+  describe ".prepends_paths" do
+    it "adds multiple paths at once" do
+      dir_1 = @sandbox.directory "plugin/assets/images"
+      dir_2 = @sandbox.directory "plugin/assets/javascripts"
+      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
+      
+      plugin = Class.new Sprockets::Plugin
+      plugin.append_path dir_1
+      plugin.prepend_paths dir_2 ,dir_3
+      plugin.paths.should == [dir_2, dir_3, dir_1].map(&:to_s)
     end
   end
   
