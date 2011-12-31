@@ -49,14 +49,12 @@ module Sprockets
       protected
       
       def normalize_paths(paths)
-        normalized_paths = []
-        paths.map do |path|
+        paths.inject([]) do |normalized_paths, path|
           path = Pathname.new(path)
           path = root.join(path) if root && path.relative?
           path = path.expand_path
           normalized_paths.push(path.to_s) if path.exist?
         end
-        normalized_paths
       end
     end
   end
