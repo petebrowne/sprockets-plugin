@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = Sprockets::Plugin::VERSION
   s.authors     = ["Pete Browne"]
   s.email       = ["me@petebrowne.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/petebrowne/sprockets-plugin"
+  s.summary     = %q{Package assets into gems for non-Rails applications.}
+  s.description = %q{Package assets into gems for non-Rails applications.}
 
   s.rubyforge_project = "sprockets-plugin"
 
