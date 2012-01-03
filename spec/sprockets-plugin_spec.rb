@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Sprockets::Plugin do
   after :each do
-    Sprockets::Plugin.class_variable_set :@@plugins, nil
+    Sprockets::Plugin.send :class_variable_set, :@@plugins, nil
   end
   
   it "adds paths from plugins to newly created environments" do
