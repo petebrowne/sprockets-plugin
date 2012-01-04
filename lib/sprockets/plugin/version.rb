@@ -1,5 +1,5 @@
 module Sprockets
   class Plugin
-    VERSION = "0.1.1"
+    VERSION = "0.1.2"
   end
 end
