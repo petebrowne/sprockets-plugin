@@ -5,40 +5,44 @@ describe Sprockets::Plugin do
     Sprockets::Plugin.send :class_variable_set, :@@plugins, nil
   end
   
-  it "adds paths from plugins to newly created environments" do
-    dir_1 = @sandbox.directory "plugin_1/assets"
-    dir_2 = @sandbox.directory "plugin_2/assets"
-    dir_3 = @sandbox.directory "plugin_3/assets"
-    
-    plugin_1 = Class.new Sprockets::Plugin
-    plugin_1.append_path dir_1
-    plugin_2 = Class.new Sprockets::Plugin
-    plugin_2.append_path dir_2
-    plugin_3 = Class.new Sprockets::Plugin
-    plugin_3.append_path dir_3
-    
-    env = Sprockets::Environment.new
-    env.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
-  end
+  describe "#append_plugin_paths" do
+    it "adds paths from plugins to environments" do
+      dir_1 = @sandbox.directory "plugin_1/assets"
+      dir_2 = @sandbox.directory "plugin_2/assets"
+      dir_3 = @sandbox.directory "plugin_3/assets"
+      
+      plugin_1 = Class.new Sprockets::Plugin
+      plugin_1.append_path dir_1
+      plugin_2 = Class.new Sprockets::Plugin
+      plugin_2.append_path dir_2
+      plugin_3 = Class.new Sprockets::Plugin
+      plugin_3.append_path dir_3
+      
+      env = Sprockets::Environment.new
+      env.append_plugin_paths
+      env.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
+    end
   
-  it "adds a #append_plugin_paths method for adding paths from plugins" do
-    dir_1 = @sandbox.directory "plugin_1/assets"
-    dir_2 = @sandbox.directory "plugin_2/assets"
-    dir_3 = @sandbox.directory "plugin_3/assets"
-    
-    plugin_1 = Class.new Sprockets::Plugin
-    plugin_1.append_path dir_1
-    
-    env = Sprockets::Environment.new
-    env.paths.should == [dir_1].map(&:to_s)
-    
-    plugin_2 = Class.new Sprockets::Plugin
-    plugin_2.append_path dir_2
-    plugin_3 = Class.new Sprockets::Plugin
-    plugin_3.append_path dir_3
-    
-    env.append_plugin_paths
-    env.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
+    it "does not add duplicate paths" do
+      dir_1 = @sandbox.directory "plugin_1/assets"
+      dir_2 = @sandbox.directory "plugin_2/assets"
+      dir_3 = @sandbox.directory "plugin_3/assets"
+      
+      plugin_1 = Class.new Sprockets::Plugin
+      plugin_1.append_path dir_1
+      
+      env = Sprockets::Environment.new
+      env.append_plugin_paths
+      env.paths.should == [dir_1].map(&:to_s)
+      
+      plugin_2 = Class.new Sprockets::Plugin
+      plugin_2.append_path dir_2
+      plugin_3 = Class.new Sprockets::Plugin
+      plugin_3.append_path dir_3
+      
+      env.append_plugin_paths
+      env.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
+    end
   end
   
   describe ".append_path" do

@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Pete Browne"]
   s.email       = ["me@petebrowne.com"]
   s.homepage    = "https://github.com/petebrowne/sprockets-plugin"
-  s.summary     = %q{Package assets into gems for non-Rails applications.}
-  s.description = %q{Package assets into gems for non-Rails applications.}
+  s.summary     = %q{Package assets into gems for non-Rails Sprockets 2.x applications.}
+  s.description = %q{Package assets into gems for non-Rails Sprockets 2.x applications.}
 
   s.rubyforge_project = "sprockets-plugin"
 
