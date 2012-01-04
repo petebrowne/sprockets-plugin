@@ -12,8 +12,8 @@ module Sprockets
         # initialization.
         #
         # Is there a better way to do this?
-        def new(root = ".")
-          super(root) do |env|
+        def new(*args)
+          super(*args) do |env|
             env.append_plugin_paths
           end
         end
