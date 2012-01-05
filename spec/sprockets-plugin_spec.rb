@@ -96,6 +96,19 @@ describe Sprockets::Plugin do
     end
   end
   
+  describe ".append_paths_in" do
+    it "adds paths within the given path" do
+      assets_dir = @sandbox.directory "plugin/assets"
+      dir_1      = assets_dir.directory "images"
+      dir_2      = assets_dir.directory "javascripts"
+      dir_3      = assets_dir.directory "stylesheets"
+      
+      plugin = Class.new Sprockets::Plugin
+      plugin.append_paths_in assets_dir
+      plugin.paths.should == [dir_1, dir_2, dir_3].map(&:to_s)
+    end
+  end
+  
   describe ".prepend_path" do
     it "adds paths" do
       dir_1 = @sandbox.directory "plugin/assets/images"

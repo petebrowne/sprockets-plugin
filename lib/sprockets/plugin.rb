@@ -31,13 +31,22 @@ module Sprockets
       # later be appended to the Sprockets::Environment.
       def append_paths(*paths)
         self.paths.push *normalize_paths(paths)
+        self
       end
       alias_method :append_path, :append_paths
+      
+      # Append each path in the given directory.
+      def append_paths_in(path)
+        path = normalize_path(path)
+        append_paths(*path.children.select(&:directory?)) if path.directory?
+        self
+      end
       
       # Prepends a path to the Plugin. The path will
       # later be appended to the Sprockets::Environment.
       def prepend_paths(*paths)
         self.paths.unshift *normalize_paths(paths)
+        self
       end
       alias_method :prepend_path, :prepend_paths
     
@@ -48,12 +57,14 @@ module Sprockets
       
       protected
       
+      def normalize_path(path)
+        Pathname.new(path).expand_path(root)
+      end
+      
       def normalize_paths(paths)
         normalized_paths = []
         paths.each do |path|
-          path = Pathname.new(path)
-          path = root.join(path) if root && path.relative?
-          path = path.expand_path
+          path = normalize_path(path)
           normalized_paths.push(path.to_s) if path.exist?
         end
         normalized_paths
