@@ -109,58 +109,6 @@ describe Sprockets::Plugin do
     end
   end
   
-  describe ".prepend_path" do
-    it "adds paths" do
-      dir_1 = @sandbox.directory "plugin/assets/images"
-      dir_2 = @sandbox.directory "plugin/assets/javascripts"
-      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
-      
-      plugin = Class.new Sprockets::Plugin
-      plugin.prepend_path dir_1
-      plugin.prepend_path dir_2
-      plugin.prepend_path dir_3
-      plugin.paths.should == [dir_3, dir_2, dir_1].map(&:to_s)
-    end
-    
-    it "adds the paths relative to the plugin root" do
-      dir_1 = @sandbox.directory "plugin/assets/images"
-      dir_2 = @sandbox.directory "plugin/assets/javascripts"
-      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
-      
-      plugin = Class.new Sprockets::Plugin
-      plugin.root @sandbox.join "plugin"
-      plugin.prepend_path "assets/images"
-      plugin.prepend_path "assets/javascripts"
-      plugin.prepend_path "assets/stylesheets"
-      plugin.paths.should == [dir_3, dir_2, dir_1].map(&:to_s)
-    end
-    
-    it "only adds existing paths" do
-      dir_1 = @sandbox.directory "plugin/assets/images"
-      dir_2 = @sandbox.directory "plugin/assets/javascripts"
-      dir_3 = @sandbox.join "plugin/assets/stylesheets"
-      
-      plugin = Class.new Sprockets::Plugin
-      plugin.prepend_path dir_1
-      plugin.prepend_path dir_2
-      plugin.prepend_path dir_3
-      plugin.paths.should == [dir_2, dir_1].map(&:to_s)
-    end
-  end
-  
-  describe ".prepends_paths" do
-    it "adds multiple paths at once" do
-      dir_1 = @sandbox.directory "plugin/assets/images"
-      dir_2 = @sandbox.directory "plugin/assets/javascripts"
-      dir_3 = @sandbox.directory "plugin/assets/stylesheets"
-      
-      plugin = Class.new Sprockets::Plugin
-      plugin.append_path dir_1
-      plugin.prepend_paths dir_2 ,dir_3
-      plugin.paths.should == [dir_2, dir_3, dir_1].map(&:to_s)
-    end
-  end
-  
   describe ".root" do
     it "converts the given path to a Pathname object" do
       plugin_path = @sandbox.join "plugin"

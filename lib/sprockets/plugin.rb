@@ -41,14 +41,6 @@ module Sprockets
         append_paths(*path.children.select(&:directory?)) if path.directory?
         self
       end
-      
-      # Prepends a path to the Plugin. The path will
-      # later be appended to the Sprockets::Environment.
-      def prepend_paths(*paths)
-        self.paths.unshift *normalize_paths(paths)
-        self
-      end
-      alias_method :prepend_path, :prepend_paths
     
       # All of the paths registered by the plugin.
       def paths
