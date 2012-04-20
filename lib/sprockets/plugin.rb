@@ -1,9 +1,9 @@
-require "pathname"
+require 'pathname'
 
 module Sprockets
   class Plugin
-    require "sprockets/plugin/version"
-    require "sprockets/plugin/aware"
+    require 'sprockets/plugin/version'
+    require 'sprockets/plugin/aware'
     
     class << self
       def inherited(plugin)

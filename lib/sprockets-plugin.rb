@@ -1,1 +1,1 @@
-require "sprockets/plugin"
+require 'sprockets/plugin'

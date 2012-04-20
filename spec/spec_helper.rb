@@ -1,6 +1,6 @@
-require "sprockets"
-require "sprockets-plugin"
-require "construct"
+require 'sprockets'
+require 'sprockets-plugin'
+require 'construct'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

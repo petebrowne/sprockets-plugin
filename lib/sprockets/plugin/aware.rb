@@ -1,4 +1,4 @@
-require "sprockets/environment"
+require 'sprockets'
 
 module Sprockets
   class Plugin
